@@ -1,0 +1,2 @@
+# huffman
+Java Huffman Implementation
