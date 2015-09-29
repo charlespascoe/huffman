@@ -11,9 +11,33 @@ public class HuffmanCompressor {
             frequencies[b]++;
         }
 
-        this.buildTree(frequencies, false).print(str);
+        Node rootNode = this.buildTree(frequencies, false);
 
-        return new byte[0];
+        HuffmanEncodingTables encTables = new HuffmanEncodingTables();
+
+        List<Byte> currentEncoding = new LinkedList<>();
+
+        rootNode.generateEncoding(encTables, currentEncoding);
+
+        byte[][] encoding = encTables.getEncoding();
+
+        BitManager bm = new BitManager();
+
+        for (byte dataByte : data) {
+            for (byte bit : encoding[dataByte]) {
+                bm.setBit(bit);
+                bm.next();
+            }
+        }
+
+        for (byte bit : encTables.getEndEncoding()) {
+            bm.setBit(bit);
+            bm.next();
+        }
+
+        bm.prev();
+
+        return bm.getData();
     }
 
     public Node buildTree(int[] frequencies, Boolean includeZeroEntries) {
