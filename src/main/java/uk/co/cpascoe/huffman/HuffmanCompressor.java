@@ -78,4 +78,28 @@ public class HuffmanCompressor {
 
         return nodes.get(0);
     }
+
+    private void huffmanTreeToBits(Node node, BitManager bitMgr) {
+        if (node instanceof NodePair) {
+            NodePair np = (NodePair)node;
+
+            // 0 indicates NodePair
+            bitMgr.add((byte)0);
+
+            this.huffmanTreeToBits(np.node0, bitMgr);
+            this.huffmanTreeToBits(np.node1, bitMgr);
+        } else if (node instanceof Leaf) {
+            Leaf l = (Leaf)node;
+
+            // 10 indicates Leaf
+            bitMgr.add((byte)1);
+            bitMgr.add((byte)0);
+
+            bitMgr.add(Utils.toBits(l.getSymbol()));
+        } else if (node instanceof EndNode) {
+            // 11 indicates EndNode
+            bitMgr.add((byte)1);
+            bitMgr.add((byte)1);
+        }
+    }
 }
