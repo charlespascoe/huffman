@@ -42,6 +42,11 @@ public class BitManager {
         }
     }
 
+    public void add(byte bit) {
+        this.setBit(bit);
+        this.next();
+    }
+
     public void next() {
         this.pos++;
         if (this.pos / 8 >= this.data.length) {
