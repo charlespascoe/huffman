@@ -102,4 +102,35 @@ public class HuffmanCompressor {
             bitMgr.add((byte)1);
         }
     }
+
+    private Node huffmanTreeFromBits(BitManager bitMgr) {
+        if (bitMgr.getBit() == 0) {
+            // 0 indicates current node is a NodePair
+            bitMgr.next();
+
+            NodePair np = new NodePair();
+
+            np.node0 = this.huffmanTreeFromBits(bitMgr);
+            np.node1 = this.huffmanTreeFromBits(bitMgr);
+
+            return np;
+        } else {
+            // Current bit is 1, move to next bit
+            bitMgr.next();
+
+            if (bitMgr.getBit() == 0) {
+                // 10 indicates current node is Leaf
+                bitMgr.next();
+
+                byte symbol = Utils.byteFromBits(bitMgr.getBits(8));
+
+                return new Leaf(symbol);
+            } else {
+                // 11 indicates current node is EndNode
+                bitMgr.next();
+
+                return new EndNode();
+            }
+        }
+    }
 }
