@@ -21,11 +21,6 @@ public class Leaf extends Node {
     }
 
     @Override
-    public void print(StringBuilder str, String line) {
-        str.append(String.format("%sLeaf %s (%s)%n", line, this.getSymbol(), this.getFrequency()));
-    }
-
-    @Override
     public Node decode(BitManager bm) {
         return this;
     }
@@ -33,5 +28,15 @@ public class Leaf extends Node {
     @Override
     public int getFrequency() {
         return this.frequency;
+    }
+
+    @Override
+    public void generateEncoding(HuffmanEncodingTables encoding, List<Byte> currentEncoding) {
+        encoding.setEncoding(this.getSymbol(), currentEncoding);
+    }
+
+    @Override
+    public void print(StringBuilder str, String line) {
+        str.append(String.format("%sLeaf %s (%s)%n", line, this.getSymbol(), this.getFrequency()));
     }
 }

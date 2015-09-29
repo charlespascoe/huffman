@@ -15,6 +15,11 @@ public class EndNode extends Node {
     }
 
     @Override
+    public void generateEncoding(HuffmanEncodingTables encoding, List<Byte> currentEncoding) {
+        encoding.setEndEncoding(currentEncoding);
+    }
+
+    @Override
     public void print(StringBuilder str, String line) {
         str.append(String.format("%sEndNode%n", line));
     }

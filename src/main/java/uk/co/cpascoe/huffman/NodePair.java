@@ -38,6 +38,15 @@ public class NodePair extends Node {
     }
 
     @Override
+    public void generateEncoding(HuffmanEncodingTables encoding, List<Byte> currentEncoding) {
+        currentEncoding.add(new Byte((byte)0));
+        this.node0.generateEncoding(encoding, currentEncoding);
+        currentEncoding.set(currentEncoding.size() - 1, new Byte((byte)1));
+        this.node1.generateEncoding(encoding, currentEncoding);
+        currentEncoding.remove(currentEncoding.size() - 1);
+    }
+
+    @Override
     public void print(StringBuilder str, String line) {
         str.append(String.format("%sNodePair (%s)%n", line, this.getFrequency()));
         this.node0.print(str, line + "   |");

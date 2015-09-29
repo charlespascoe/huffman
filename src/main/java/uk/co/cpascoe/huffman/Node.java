@@ -13,9 +13,9 @@ public abstract class Node implements Comparable<Node> {
         this.print(str, "");
     }
 
-    public abstract void print(StringBuilder str, String line);
+    public abstract void generateEncoding(HuffmanEncodingTables encoding, List<Byte> currentEncoding);
 
-    // public abstract void generateEncoding();
+    public abstract void print(StringBuilder str, String line);
 
     public int compareTo(Node other) {
         return this.getFrequency() - other.getFrequency();
