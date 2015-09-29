@@ -1,22 +1,35 @@
 package uk.co.cpascoe.huffman;
 
-public class Leaf<T> {
-    private int frequency;
-    private T symbol;
+import java.lang.*;
 
-    public Leaf(T symbol) {
+public class Leaf extends Node {
+    private int frequency;
+    private byte symbol;
+
+    public Leaf(byte symbol) {
         this.symbol = symbol;
     }
 
-    public Leaf(T symbol, int frequency) {
+    public Leaf(byte symbol, int frequency) {
         this.symbol = symbol;
         this.frequency = frequency;
     }
 
-    public T getSymbol() {
+    public byte getSymbol() {
         return this.symbol;
     }
 
+    @Override
+    public void print(StringBuilder str, String line) {
+        str.append(String.format("%sLeaf %s (%s)%n", line, this.getSymbol(), this.getFrequency()));
+    }
+
+    @Override
+    public Node decode(BitManager bm) {
+        return this;
+    }
+
+    @Override
     public int getFrequency() {
         return this.frequency;
     }
