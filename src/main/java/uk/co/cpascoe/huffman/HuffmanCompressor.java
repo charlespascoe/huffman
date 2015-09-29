@@ -14,7 +14,6 @@ public class HuffmanCompressor {
         Node rootNode = this.buildTree(frequencies, false);
 
         HuffmanEncodingTables encTables = new HuffmanEncodingTables();
-
         List<Byte> currentEncoding = new LinkedList<>();
 
         rootNode.generateEncoding(encTables, currentEncoding);
@@ -23,18 +22,17 @@ public class HuffmanCompressor {
 
         BitManager bm = new BitManager();
 
+        this.huffmanTreeToBits(rootNode, bm);
+
         for (byte dataByte : data) {
-            for (byte bit : encoding[dataByte]) {
-                bm.setBit(bit);
-                bm.next();
-            }
+            bm.add(encoding[dataByte]);
         }
 
-        for (byte bit : encTables.getEndEncoding()) {
-            bm.setBit(bit);
-            bm.next();
-        }
+        bm.add(encTables.getEndEncoding())
 
+        // Moves to the last written bit
+        // since getData always includes the byte
+        // the position is pointing at
         bm.prev();
 
         return bm.getData();
