@@ -47,6 +47,12 @@ public class BitManager {
         this.next();
     }
 
+    public void add(byte[] bits) {
+        for (byte b : bits) {
+            this.add(b);
+        }
+    }
+
     public void next() {
         this.pos++;
         if (this.pos / 8 >= this.data.length) {
