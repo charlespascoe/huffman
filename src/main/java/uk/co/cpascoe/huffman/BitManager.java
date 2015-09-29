@@ -18,8 +18,20 @@ public class BitManager {
         this.pos = 0;
     }
 
+    public byte getBit(int p) {
+        if (p < 0 || (p / 8) >= this.data.length) {
+            return 0;
+        } else {
+            return (byte)((this.data[p / 8] & BitManager.POWERS[p % 8]) != 0 ? 1 : 0);
+        }
+    }
+
     public byte getBit() {
-        return (byte)((this.data[this.pos / 8] & BitManager.POWERS[this.pos % 8]) != 0 ? 1 : 0);
+        return this.getBit(this.pos);
+    }
+
+    public byte peekBit(int disp) {
+        return this.getBit(this.pos + disp);
     }
 
     public void setBit(byte bit) {
