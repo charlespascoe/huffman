@@ -36,4 +36,14 @@ public class BitManager {
             this.data = Arrays.copyOf(data, data.length * 2);
         }
     }
+
+    public void prev() {
+        if (this.pos > 0) {
+            this.pos--;
+        }
+    }
+
+    public byte[] getData() {
+        return Arrays.copyOf(this.data, (this.pos / 8) + 1);
+    }
 }
