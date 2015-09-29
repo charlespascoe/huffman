@@ -28,7 +28,7 @@ public class HuffmanCompressor {
             bm.add(encoding[dataByte]);
         }
 
-        bm.add(encTables.getEndEncoding())
+        bm.add(encTables.getEndEncoding());
 
         // Moves to the last written bit
         // since getData always includes the byte
@@ -106,10 +106,10 @@ public class HuffmanCompressor {
             // 0 indicates current node is a NodePair
             bitMgr.next();
 
-            NodePair np = new NodePair();
+            Node node0 = this.huffmanTreeFromBits(bitMgr);
+            Node node1 = this.huffmanTreeFromBits(bitMgr);
 
-            np.node0 = this.huffmanTreeFromBits(bitMgr);
-            np.node1 = this.huffmanTreeFromBits(bitMgr);
+            NodePair np = new NodePair(node0, node1);
 
             return np;
         } else {
