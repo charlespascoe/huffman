@@ -1,6 +1,7 @@
 package uk.co.cpascoe.huffman;
 
 import java.lang.*;
+import java.util.*;
 
 public class Leaf extends Node {
     private int frequency;

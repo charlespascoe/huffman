@@ -1,6 +1,7 @@
 package uk.co.cpascoe.huffman;
 
-import java.util.Arrays;
+import java.lang.*;
+import java.util.*;
 
 public class BitManager {
     private byte[] data;

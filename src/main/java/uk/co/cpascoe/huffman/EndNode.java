@@ -1,5 +1,8 @@
 package uk.co.cpascoe.huffman;
 
+import java.lang.*;
+import java.util.*;
+
 public class EndNode extends Node {
     @Override
     public Node decode(BitManager bm) {
