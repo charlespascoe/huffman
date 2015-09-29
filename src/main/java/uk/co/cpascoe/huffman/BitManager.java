@@ -13,8 +13,8 @@ public class BitManager {
         this.pos = 0;
     }
 
-    public BitManager(byte[] data) {
-        this.data = Arrays.copyOf(data, data.length);
+    public BitManager(byte[] initialData) {
+        this.data = Arrays.copyOf(initialData, initialData.length);
         this.pos = 0;
     }
 
