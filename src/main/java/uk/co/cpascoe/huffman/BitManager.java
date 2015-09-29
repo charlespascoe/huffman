@@ -30,6 +30,17 @@ public class BitManager {
         return this.getBit(this.pos);
     }
 
+    public byte[] getBits(int length) {
+        byte[] bits = new byte[length];
+
+        for (int i = 0; i < bits.length; i++) {
+            bits[i] = this.getBit();
+            this.next();
+        }
+
+        return bits;
+    }
+
     public byte peekBit(int disp) {
         return this.getBit(this.pos + disp);
     }
