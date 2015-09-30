@@ -2,19 +2,36 @@ package uk.co.cpascoe.huffman;
 
 import java.lang.*;
 import java.util.*;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Huffman!");
+        boolean compress = true;
+        // TODO: Better argument parsing
+        if (args.length > 0) {
+            for (String arg : args) {
+                if (arg.equals("-d")) {
+                    compress = false;
+                }
+            }
+        }
+
+        byte[] inputData;
+
+        try {
+            inputData = Utils.readAllBytesFromStream(System.in);
+
+            if (inputData.length == 0) { return; }
+
+        } catch (IOException ex) {
+            System.err.println("Failed to read data");
+            return;
+        }
 
         HuffmanCompressor h = new HuffmanCompressor();
 
-        System.out.println(Utils.byteFromBits(Utils.toBits((byte)100)));
+        byte[] outputData = compress ? h.compress(inputData) : h.decompress(inputData);
 
-        byte[] compressed = h.compress(new byte[] {100, 50, 100, 100, 0, 50});
-
-        for (byte b : h.decompress(compressed)) {
-            System.out.println(b);
-        }
+        System.out.write(outputData, 0, outputData.length);
     }
 }
