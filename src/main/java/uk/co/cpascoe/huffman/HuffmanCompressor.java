@@ -8,7 +8,7 @@ public class HuffmanCompressor {
         int[] frequencies = new int[256];
 
         for (byte b : data) {
-            frequencies[b]++;
+            frequencies[Utils.toUnsignedByte(b)]++;
         }
 
         Node rootNode = this.buildTree(frequencies, false);
@@ -25,7 +25,7 @@ public class HuffmanCompressor {
         this.huffmanTreeToBits(rootNode, bm);
 
         for (byte dataByte : data) {
-            bm.add(encoding[dataByte]);
+            bm.add(encoding[Utils.toUnsignedByte(dataByte)]);
         }
 
         bm.add(encTables.getEndEncoding());

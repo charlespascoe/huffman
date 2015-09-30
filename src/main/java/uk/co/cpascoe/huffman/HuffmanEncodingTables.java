@@ -24,7 +24,7 @@ public class HuffmanEncodingTables {
             enc[i] = (byte)(synbEnc.get(i) > 0 ? 1 : 0);
         }
 
-        this.encoding[symb] = enc;
+        this.encoding[Utils.toUnsignedByte(symb)] = enc;
     }
 
     public void setEndEncoding(List<Byte> endEnc) {
