@@ -1,5 +1,10 @@
 package uk.co.cpascoe.huffman;
 
+import java.lang.*;
+import java.util.*;
+import java.io.InputStream;
+import java.io.IOException;
+
 public class Utils {
     /**
      * Returns the big-endian representation of a byte value
@@ -33,5 +38,28 @@ public class Utils {
         }
 
         return val;
+    }
+
+    public static byte[] readAllBytesFromStream(InputStream strm) throws IOException {
+        byte[] data = new byte[0];
+        byte[] buffer = new byte[65536];
+        int readCount = 0;
+        int prevLength = 0;
+
+        while (true) {
+            readCount = strm.read(buffer, 0, buffer.length);
+            if (readCount == -1) { break; }
+
+            prevLength = data.length;
+
+            data = Arrays.copyOf(data, data.length + readCount);
+            System.arraycopy(buffer, 0, data, prevLength, readCount);
+        }
+
+        return data;
+    }
+
+    public static int toUnsignedByte(byte b) {
+        return b + (b < 0 ? 256 : 0);
     }
 }
