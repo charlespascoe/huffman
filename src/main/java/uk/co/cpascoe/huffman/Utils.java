@@ -25,11 +25,11 @@ public class Utils {
 
         byte val = 0;
 
-        byte bitValue = (byte)128;
+        byte bitValue = 1;
 
-        for (byte b : bits) {
-            val += b * bitValue;
-            bitValue = (byte)(bitValue >> 1);
+        for (int i = 7; i >= 0; i--) {
+            val += bits[i] * bitValue;
+            bitValue = (byte)(bitValue << 1);
         }
 
         return val;
