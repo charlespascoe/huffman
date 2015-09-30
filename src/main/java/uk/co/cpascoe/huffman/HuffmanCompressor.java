@@ -38,6 +38,33 @@ public class HuffmanCompressor {
         return bm.getData();
     }
 
+    public byte[] decompress(byte[] data) {
+        BitManager bitMgr = new BitManager(data);
+
+        Node rootNode = this.huffmanTreeFromBits(bitMgr);
+
+        List<Byte> outData = new ArrayList<>();
+
+        while (true) {
+            Node decodedValue = rootNode.decode(bitMgr);
+
+            if (decodedValue instanceof Leaf) {
+                Leaf l = (Leaf)decodedValue;
+                outData.add(new Byte(l.getSymbol()));
+            } else if (decodedValue instanceof EndNode) {
+                break;
+            }
+        }
+
+        byte[] out = new byte[outData.size()];
+
+        for (int i = 0; i < out.length; i++) {
+            out[i] = outData.get(i).byteValue();
+        }
+
+        return out;
+    }
+
     public Node buildTree(int[] frequencies, Boolean includeZeroEntries) {
         if (frequencies.length != 256) {
             throw new IllegalArgumentException("Invalid frequencies length");
