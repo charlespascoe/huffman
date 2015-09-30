@@ -9,7 +9,11 @@ public class Main {
 
         HuffmanCompressor h = new HuffmanCompressor();
 
-        for (byte b : h.compress(new byte[] {100, 50, 100, 100, 0, 50})) {
+        System.out.println(Utils.byteFromBits(Utils.toBits((byte)100)));
+
+        byte[] compressed = h.compress(new byte[] {100, 50, 100, 100, 0, 50});
+
+        for (byte b : h.decompress(compressed)) {
             System.out.println(b);
         }
     }
