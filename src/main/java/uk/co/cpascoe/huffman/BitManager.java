@@ -77,6 +77,10 @@ public class BitManager {
         }
     }
 
+    public Boolean nextBitAvailable() {
+        return ((this.pos + 1) / 8) < this.data.length;
+    }
+
     public byte[] getData() {
         return Arrays.copyOf(this.data, (this.pos / 8) + 1);
     }
