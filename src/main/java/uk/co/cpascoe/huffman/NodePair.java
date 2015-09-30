@@ -24,6 +24,10 @@ public class NodePair extends Node {
 
     @Override
     public Node decode(BitManager bm) {
+        if (!bm.nextBitAvailable()) {
+            return new EndNode();
+        }
+
         byte nextBit = bm.getBit();
         bm.next();
 
