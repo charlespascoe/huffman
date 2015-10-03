@@ -13,28 +13,43 @@ public class Utils {
      * @return     The big-endian array of bits (as bytes)
      */
     public static byte[] toBits(byte val) {
-        byte[] bits = new byte[8];
+        return Utils.toBits(Utils.toUnsignedByte(val), 8);
+    }
 
-        byte mask = 1;
+    public static byte[] toBits(int val, int bitLength) {
+        if (bitLength < 0) {
+            return new byte[0];
+        }
 
-        for (int i = 7; i >= 0; i--) {
-            bits[i] = (byte)((val & mask) > 0 ? 1 : 0);
-            mask = (byte)(mask << 1);
+        byte[] bits = new byte[bitLength];
+
+        int mask = 1;
+
+        for (int i = bitLength - 1; i >= 0; i--) {
+            bits[i] = (byte)((val & mask) != 0 ? 1 : 0);
+            mask = (mask << 1);
         }
 
         return bits;
     }
 
     public static byte byteFromBits(byte[] bits) {
-        // TODO: Check bits length
+        if (bits.length != 8) {
+            return (byte)0;
+        }
 
-        byte val = 0;
+        // Casting int (0 to 255) to byte (-128 to 127)
+        return (byte)Utils.intFromBits(bits);
+    }
 
-        byte bitValue = 1;
+    public static int intFromBits(byte[] bits) {
+        int val = 0;
 
-        for (int i = 7; i >= 0; i--) {
+        int bitValue = 1;
+
+        for (int i = bits.length - 1; i >= 0; i--) {
             val += bits[i] * bitValue;
-            bitValue = (byte)(bitValue << 1);
+            bitValue = (int)(bitValue << 1);
         }
 
         return val;
@@ -61,5 +76,23 @@ public class Utils {
 
     public static int toUnsignedByte(byte b) {
         return b + (b < 0 ? 256 : 0);
+    }
+
+    public static byte[] concat(byte[]... arrays) {
+        int length = 0;
+
+        for (byte[] array : arrays) {
+            length += array.length;
+        }
+
+        byte[] out = new byte[length];
+
+        int pos = 0;
+
+        for (byte[] array : arrays) {
+            System.arraycopy(array, 0, out, pos, array.length);
+        }
+
+        return out;
     }
 }
