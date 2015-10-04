@@ -23,9 +23,9 @@ public class NodePair extends Node {
     }
 
     @Override
-    public Node decode(BitManager bm) {
+    public byte decode(BitManager bm) {
         if (!bm.nextBitAvailable()) {
-            return new EndNode();
+            throw new ArrayIndexOutOfBoundsException("End of data");
         }
 
         byte nextBit = bm.getBit();

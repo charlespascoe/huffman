@@ -7,7 +7,7 @@ public abstract class Node implements Comparable<Node> {
 
     public abstract int getFrequency();
 
-    public abstract Node decode(BitManager bm);
+    public abstract byte decode(BitManager bm);
 
     public void print(StringBuilder str) {
         this.print(str, "");

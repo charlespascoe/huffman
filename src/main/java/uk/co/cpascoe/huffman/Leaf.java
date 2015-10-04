@@ -21,8 +21,8 @@ public class Leaf extends Node {
     }
 
     @Override
-    public Node decode(BitManager bm) {
-        return this;
+    public byte decode(BitManager bm) {
+        return this.getSymbol();
     }
 
     @Override
