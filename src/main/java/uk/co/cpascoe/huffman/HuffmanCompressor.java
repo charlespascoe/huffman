@@ -24,6 +24,8 @@ public class HuffmanCompressor {
 
         this.huffmanTreeToBits(rootNode, bm);
 
+        bm.add(HuffmanCompressor.lengthToBits(data.length));
+
         for (byte dataByte : data) {
             bm.add(encoding[Utils.toUnsignedByte(dataByte)]);
         }
@@ -43,23 +45,12 @@ public class HuffmanCompressor {
 
         Node rootNode = this.huffmanTreeFromBits(bitMgr);
 
-        List<Byte> outData = new ArrayList<>();
+        int dataLength = HuffmanCompressor.lengthFromBits(bitMgr);
 
-        while (true) {
-            Node decodedValue = rootNode.decode(bitMgr);
+        byte[] out = new byte[dataLength];
 
-            if (decodedValue instanceof Leaf) {
-                Leaf l = (Leaf)decodedValue;
-                outData.add(new Byte(l.getSymbol()));
-            } else if (decodedValue instanceof EndNode) {
-                break;
-            }
-        }
-
-        byte[] out = new byte[outData.size()];
-
-        for (int i = 0; i < out.length; i++) {
-            out[i] = outData.get(i).byteValue();
+        for (int i = 0; i < dataLength; i++) {
+            out[i] = rootNode.decode(bitMgr);
         }
 
         return out;
