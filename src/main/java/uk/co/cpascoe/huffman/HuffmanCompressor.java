@@ -104,6 +104,26 @@ public class HuffmanCompressor {
         return nodes.get(0);
     }
 
+    public static byte[] lengthToBits(int length) {
+        if (length < 256) {
+            // Represent the length as an 8-bit unsigned integer
+            // (0 = 8 bit unsigned length)
+            return Utils.concat(new byte[] { 0 }, Utils.toBits(length, 8));
+        } else {
+            // Represent the length as an 8-bit signed integer
+            // (1 = 32 bit signed length)
+            return Utils.concat(new byte[] { 1 }, Utils.toBits(length, 32));
+        }
+    }
+
+    public static int lengthFromBits(BitManager bitMgr) {
+        int bitLength = (bitMgr.getBit() == 0 ? 8 : 32);
+
+        bitMgr.next();
+
+        return Utils.intFromBits(bitMgr.getBits(bitLength));
+    }
+
     private void huffmanTreeToBits(Node node, BitManager bitMgr) {
         if (node instanceof NodePair) {
             NodePair np = (NodePair)node;
