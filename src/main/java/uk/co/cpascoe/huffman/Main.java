@@ -28,11 +28,10 @@ public class Main {
             return;
         }
 
-        HuffmanCompressor h = new HuffmanCompressor();
-
         byte[] outputData;
+
         try {
-            outputData = compress ? h.compress(inputData) : h.decompress(inputData);
+            outputData = compress ? HuffmanCompressor.compress(inputData) : HuffmanCompressor.decompress(inputData);
         } catch (Exception ex) {
             System.err.println(ex.toString());
             return;

@@ -3,15 +3,15 @@ package uk.co.cpascoe.huffman;
 import java.util.*;
 import java.lang.*;
 
-public class HuffmanCompressor {
-    public byte[] compress(byte[] data) {
+public abstract class HuffmanCompressor {
+    public static byte[] compress(byte[] data) {
         int[] frequencies = new int[256];
 
         for (byte b : data) {
             frequencies[Utils.toUnsignedByte(b)]++;
         }
 
-        Node rootNode = this.buildTree(frequencies, false);
+        Node rootNode = HuffmanCompressor.buildTree(frequencies, false);
 
         HuffmanEncodingTables encTables = new HuffmanEncodingTables();
         List<Byte> currentEncoding = new LinkedList<>();
@@ -22,7 +22,7 @@ public class HuffmanCompressor {
 
         BitManager bm = new BitManager();
 
-        this.huffmanTreeToBits(rootNode, bm);
+        HuffmanCompressor.huffmanTreeToBits(rootNode, bm);
 
         bm.add(HuffmanCompressor.lengthToBits(data.length));
 
@@ -40,10 +40,10 @@ public class HuffmanCompressor {
         return bm.getData();
     }
 
-    public byte[] decompress(byte[] data) {
+    public static byte[] decompress(byte[] data) {
         BitManager bitMgr = new BitManager(data);
 
-        Node rootNode = this.huffmanTreeFromBits(bitMgr);
+        Node rootNode = HuffmanCompressor.huffmanTreeFromBits(bitMgr);
 
         int dataLength = HuffmanCompressor.lengthFromBits(bitMgr);
 
@@ -56,7 +56,7 @@ public class HuffmanCompressor {
         return out;
     }
 
-    public Node buildTree(int[] frequencies, Boolean includeZeroEntries) {
+    public static Node buildTree(int[] frequencies, Boolean includeZeroEntries) {
         if (frequencies.length != 256) {
             throw new IllegalArgumentException("Invalid frequencies length");
         }
@@ -113,15 +113,15 @@ public class HuffmanCompressor {
         return Utils.intFromBits(bitMgr.getBits(bitLength));
     }
 
-    private void huffmanTreeToBits(Node node, BitManager bitMgr) {
+    public static void huffmanTreeToBits(Node node, BitManager bitMgr) {
         if (node instanceof NodePair) {
             NodePair np = (NodePair)node;
 
             // 0 indicates NodePair
             bitMgr.add((byte)0);
 
-            this.huffmanTreeToBits(np.node0, bitMgr);
-            this.huffmanTreeToBits(np.node1, bitMgr);
+            HuffmanCompressor.huffmanTreeToBits(np.node0, bitMgr);
+            HuffmanCompressor.huffmanTreeToBits(np.node1, bitMgr);
         } else if (node instanceof Leaf) {
             Leaf l = (Leaf)node;
 
@@ -132,13 +132,13 @@ public class HuffmanCompressor {
         }
     }
 
-    private Node huffmanTreeFromBits(BitManager bitMgr) {
+    public static Node huffmanTreeFromBits(BitManager bitMgr) {
         if (bitMgr.getBit() == 0) {
             // 0 indicates current node is a NodePair
             bitMgr.next();
 
-            Node node0 = this.huffmanTreeFromBits(bitMgr);
-            Node node1 = this.huffmanTreeFromBits(bitMgr);
+            Node node0 = HuffmanCompressor.huffmanTreeFromBits(bitMgr);
+            Node node1 = HuffmanCompressor.huffmanTreeFromBits(bitMgr);
 
             NodePair np = new NodePair(node0, node1);
 
