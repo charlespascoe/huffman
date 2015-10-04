@@ -91,6 +91,7 @@ public class Utils {
 
         for (byte[] array : arrays) {
             System.arraycopy(array, 0, out, pos, array.length);
+            pos += array.length;
         }
 
         return out;
