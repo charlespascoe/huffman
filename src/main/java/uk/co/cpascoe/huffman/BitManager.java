@@ -45,6 +45,10 @@ public class BitManager {
         return this.getBit(this.pos + disp);
     }
 
+    public void resetPosition() {
+        this.pos = 0;
+    }
+
     public void setBit(byte bit) {
         byte currentBit = this.getBit();
 
