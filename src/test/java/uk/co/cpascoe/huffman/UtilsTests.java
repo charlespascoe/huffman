@@ -27,6 +27,7 @@ public class UtilsTests {
         assertArrayEquals(Utils.toBits(255, 8), new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 });
         assertArrayEquals(Utils.toBits(256, 8), new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 });
         assertArrayEquals(Utils.toBits(256, 32), new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 });
+        assertArrayEquals(Utils.toBits(-1, 32), new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
     }
 
     @Test
