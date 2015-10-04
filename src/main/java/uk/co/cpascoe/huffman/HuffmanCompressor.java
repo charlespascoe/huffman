@@ -69,8 +69,6 @@ public class HuffmanCompressor {
             }
         }
 
-        nodes.add(new EndNode());
-
         Collections.sort(nodes);
 
         while (nodes.size() > 1) {
@@ -127,15 +125,10 @@ public class HuffmanCompressor {
         } else if (node instanceof Leaf) {
             Leaf l = (Leaf)node;
 
-            // 10 indicates Leaf
+            // 1 indicates Leaf
             bitMgr.add((byte)1);
-            bitMgr.add((byte)0);
 
             bitMgr.add(Utils.toBits(l.getSymbol()));
-        } else if (node instanceof EndNode) {
-            // 11 indicates EndNode
-            bitMgr.add((byte)1);
-            bitMgr.add((byte)1);
         }
     }
 
@@ -151,22 +144,12 @@ public class HuffmanCompressor {
 
             return np;
         } else {
-            // Current bit is 1, move to next bit
+            // Current bit is 1, indicates current node is Leaf
             bitMgr.next();
 
-            if (bitMgr.getBit() == 0) {
-                // 10 indicates current node is Leaf
-                bitMgr.next();
+            byte symbol = Utils.byteFromBits(bitMgr.getBits(8));
 
-                byte symbol = Utils.byteFromBits(bitMgr.getBits(8));
-
-                return new Leaf(symbol);
-            } else {
-                // 11 indicates current node is EndNode
-                bitMgr.next();
-
-                return new EndNode();
-            }
+            return new Leaf(symbol);
         }
     }
 }
