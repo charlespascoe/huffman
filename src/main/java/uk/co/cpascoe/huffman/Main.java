@@ -30,7 +30,13 @@ public class Main {
 
         HuffmanCompressor h = new HuffmanCompressor();
 
-        byte[] outputData = compress ? h.compress(inputData) : h.decompress(inputData);
+        byte[] outputData;
+        try {
+            outputData = compress ? h.compress(inputData) : h.decompress(inputData);
+        } catch (Exception ex) {
+            System.err.println(ex.toString());
+            return;
+        }
 
         System.out.write(outputData, 0, outputData.length);
     }
